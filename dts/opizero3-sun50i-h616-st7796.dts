@@ -5,12 +5,13 @@
 MOSI      	PH7 SPI1_MOSI
 MISO      	PH8 SPI1_MISO
 CLK       	PH6 SPI1_CLK
-TFT_CS    	PH9 SPI1_CS
+TFT_CS    	PC10
 DC        	PC7 
 TOUCH_CS  	PC14
 TOUCH_IRQ 	PC15
 LED       	3.3V
 */
+
 
 / {
     compatible = "allwinner,sun50i-h616";
@@ -18,17 +19,19 @@ LED       	3.3V
     fragment@0 {
         target-path = "/soc/spi@5011000";
         __overlay__ {
-            num-cs = <2>;
+            num-cs = <3>;
 
                 cs-gpios = <&pio 2 14 0>, /* TOUCH_CS PC14 */
-                           <&pio 7 9 0>;  /* TFT_CS PH9 */
+			   <0>,           /* spidev1.1 compatibility */
+			   <&pio 2 10 0>; /* TFT_CS PC10 */
+
             status = "okay";
             #address-cells = <1>;
             #size-cells = <0>;
 
             st7796: st7796s@0{
                 compatible = "sitronix,st7796s";
-                reg = <0>;
+                reg = <2>;
                 spi-max-frequency = <25000000>;
                 fps = <30>;
                 buswidth = <8>;
@@ -47,7 +50,7 @@ LED       	3.3V
             status = "okay";
             ads7846@0 {
                 compatible = "ti,ads7846";
-                reg = <1>;
+                reg = <0>;
                 status = "okay";
                 spi-max-frequency = <1000000>;
                 interrupts = <2 15 2>; /* high-to-low edge triggered */
@@ -63,9 +66,8 @@ LED       	3.3V
                ti,y-max = /bits/ 16 <0xFFF>;
                ti,x-plate-ohms = /bits/ 16 <60>;
                ti,pressure-max = /bits/ 16 <255>;
-                ti,swap-xy = <0>;   };
-        };
-        };
-
-
+                ti,swap-xy = <0>;
+	    };
+	};
     };
+};
