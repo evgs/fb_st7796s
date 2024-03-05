@@ -32,7 +32,7 @@ LED       	3.3V
             st7796: st7796s@0{
                 compatible = "sitronix,st7796s";
                 reg = <2>;
-                spi-max-frequency = <25000000>;
+                spi-max-frequency = <50000000>;
                 fps = <30>;
                 buswidth = <8>;
                 dc-gpios = <&pio 2 7 0>;     /* TFT D/C PC7 */
@@ -52,7 +52,7 @@ LED       	3.3V
                 compatible = "ti,ads7846";
                 reg = <0>;
                 status = "okay";
-                spi-max-frequency = <1000000>;
+                spi-max-frequency = <125000>;
                 interrupts = <2 15 2>; /* high-to-low edge triggered */
                     interrupt-parent = <&pio>;   /* PC15 */
                 pendown-gpio = <&pio 2 15 0>;
