@@ -2,12 +2,15 @@
 /plugin/;
 
 /*
+.dts for Orange Pi Zero 3. Tested on Debian Bookworm 6.1.31 official image from orangepi.org.
+This overlay does not use SPI1 CS1 (PH9), so you can use it with default spi1_cs1_spidev overlay simultaneously.
+
 MOSI      	PH7 SPI1_MOSI
 MISO      	PH8 SPI1_MISO
 CLK       	PH6 SPI1_CLK
-TFT_CS    	PC10
+TFT_CS    	PC10   (reg = <2>)
 DC        	PC7 
-TOUCH_CS  	PC14
+TOUCH_CS  	PC14   (reg = <0>)
 TOUCH_IRQ 	PC15
 LED       	3.3V
 */
