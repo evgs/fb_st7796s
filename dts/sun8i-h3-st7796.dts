@@ -8,8 +8,8 @@
 		target = <&spi0>;
 		__overlay__ {
 			num-cs = <2>;
-			cs-gpios = <&pio 2 3 0>,
-					   <&pio 0 6 0>;			
+			cs-gpios = <&pio 2 3 0>, /* CS0=PC3 for tft ? */
+				  <&pio 0 6 0>; /* CS1=PA6 for touch ? */			
 			status = "okay";
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -21,8 +21,8 @@
 				rotation = <180>;
 				fps = <30>;
 				buswidth = <8>;
-				reset-gpios = <&pio 6 8 1>;
-				dc-gpios = <&pio 6 9 0>;
+				reset-gpios = <&pio 6 8 1>; /* TFT_RST= PG8 ? */
+				dc-gpios = <&pio 6 9 0>; /* TFT_DC = PG9 ?*/
 				debug = <0>;
 			};
 
@@ -33,7 +33,7 @@
 				spi-max-frequency = <1600000>;
 				interrupt-parent = <&pio>;
 				interrupts = <0 3 2>; /* PA3 IRQ_TYPE_EDGE_FALLING */
-				pendown-gpio = <&pio 0 3 0>; /* PA3 */
+				pendown-gpio = <&pio 0 3 0>; /* TOUCH_IRQ = PA3 */
 
 				/* driver defaults, optional */
 				ti,x-min = /bits/ 16 <0>;
