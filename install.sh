@@ -13,7 +13,9 @@ SCRIPT=$(realpath "$0")
 SPATH=$(dirname "$SCRIPT")
 
 echo "Check kernel architecture..."
-UN=`uname -a`
+### Fast and dirty workaround to specify kernel in chroot environment
+UN=$1 
+[ ! -z "$UN" ] || UN=`uname -a`
 
 #armbian, https://www.armbian.com/orangepi3-lts/
 echo "$UN" | grep sunxi64 && LHEADERS=linux-headers-current-sunxi64
