@@ -44,7 +44,7 @@ make KERNELVER=$KV || die "Driver compiling fault"
 
 echo "Installing kernel module..."
 sudo make KERNELVER=$KV install
-make clean
+make KERNELVER=$KV clean
 sudo depmod -A
 
 echo "Appending to initramfs..."
