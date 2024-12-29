@@ -14,6 +14,7 @@ SPATH=$(dirname "$SCRIPT")
 
 echo "Check kernel architecture..."
 ### Fast and dirty workaround to specify kernel in chroot environment
+# first parameter should be formatted as: 5.16.17-sun50iw6
 KV=$1
 [ ! -z "$KV" ] || KV=`uname -r`
 
