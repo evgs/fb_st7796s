@@ -23,7 +23,7 @@ echo "$KV" | grep sunxi64 && LHEADERS=linux-headers-current-sunxi64
 echo "$KV" | grep sunxi64 && OVL=armbian-add-overlay
 
 #debian, https://github.com/silver-alx/sbc/releases
-echo "$LV" | grep sun50iw6 && LHEADERS=linux-headers-next-sun50iw6
+echo "$KV" | grep sun50iw6 && LHEADERS=linux-headers-next-sun50iw6
 echo "$KV" | grep sun50iw6 && OVL=orangepi-add-overlay
 #workaround for kernel 5.10.76
 echo "$KV" | grep 5.10.76-sun50iw6 && LHEADERS=linux-headers-current-sun50iw6
