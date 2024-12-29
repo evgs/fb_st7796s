@@ -43,7 +43,7 @@ echo "Building driver..."
 make KERNELVER=$KV || die "Driver compiling fault"
 
 echo "Installing kernel module..."
-sudo make install
+sudo make KERNELVER=$KV install
 make clean
 sudo depmod -A
 
