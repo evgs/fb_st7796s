@@ -17,6 +17,9 @@ echo "Check kernel architecture..."
 UN=$1 
 [ ! -z "$UN" ] || UN=`uname -a`
 
+KV=$2
+[ ! -z "$KV" ] || KV=`uname -r`
+
 #armbian, https://www.armbian.com/orangepi3-lts/
 echo "$UN" | grep sunxi64 && LHEADERS=linux-headers-current-sunxi64
 echo "$UN" | grep sunxi64 && OVL=armbian-add-overlay
@@ -39,7 +42,7 @@ cd $SPATH
 cd $SPATH/kernel_module/
 
 echo "Building driver..."
-make  || die "Driver compiling fault"
+make KERNELVER=$KV || die "Driver compiling fault"
 
 echo "Installing kernel module..."
 sudo make install
