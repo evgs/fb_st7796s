@@ -37,8 +37,8 @@
 	#address-cells = <1>;
         #size-cells = <0>;
 	status = "okay";
-	ads7846@0 {
-	    compatible = "ti,ads7846";
+	ads7846x@0 {
+	    compatible = "ti,ads7846x";
 	    reg = <1>;
 	    status = "okay";
 	    spi-max-frequency = <1000000>;
@@ -55,8 +55,10 @@
            ti,y-max = /bits/ 16 <0xFFF>;
            ti,x-plate-ohms = /bits/ 16 <60>;
            ti,pressure-max = /bits/ 16 <255>;
-            ti,swap-xy = <0>;	};
-    };
+           ti,swap-xy = <0>;	
+	   wakeup-source;
+	  };
+    	};
     };
 
 
