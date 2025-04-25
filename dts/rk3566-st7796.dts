@@ -42,9 +42,9 @@
 	    reg = <1>;
 	    status = "okay";
 	    spi-max-frequency = <1000000>;
-	    interrupt-parent = <&gpio4>;   /* GPIO4_A4 */
-	    interrupts = <4 2>; /* high-to-low edge triggered */
-	    pendown-gpio = <&gpio4 4 0>;	    
+	    interrupt-parent = <&gpio4>;   /* GPIO4_A3 */
+	    interrupts = <3 2>; /* high-to-low edge triggered */
+	    pendown-gpio = <&gpio4 3 0>;	    
 
 	    /* driver defaults, optional */
 
