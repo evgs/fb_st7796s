@@ -1,0 +1,164 @@
+--- ads7846.c-5.10.160	2025-04-25 15:15:08.235597704 +0500
++++ ads7846x.c	2025-04-25 11:24:00.000000000 +0500
+@@ -340,6 +340,7 @@
+ 	struct ads7846 *ts = dev_get_drvdata(dev);
+ 	struct ser_req *req;
+ 	int status;
++	static char zeroes[4]={0};
+ 
+ 	req = kzalloc(sizeof *req, GFP_KERNEL);
+ 	if (!req)
+@@ -354,6 +355,7 @@
+ 		req->xfer[0].len = 1;
+ 		spi_message_add_tail(&req->xfer[0], &req->msg);
+ 
++		req->xfer[1].tx_buf = zeroes;
+ 		req->xfer[1].rx_buf = &req->scratch;
+ 		req->xfer[1].len = 2;
+ 
+@@ -375,6 +377,7 @@
+ 	req->xfer[2].len = 1;
+ 	spi_message_add_tail(&req->xfer[2], &req->msg);
+ 
++	req->xfer[3].tx_buf = zeroes;
+ 	req->xfer[3].rx_buf = &req->sample;
+ 	req->xfer[3].len = 2;
+ 	spi_message_add_tail(&req->xfer[3], &req->msg);
+@@ -387,6 +390,7 @@
+ 	req->xfer[4].len = 1;
+ 	spi_message_add_tail(&req->xfer[4], &req->msg);
+ 
++	req->xfer[5].tx_buf = zeroes;
+ 	req->xfer[5].rx_buf = &req->scratch;
+ 	req->xfer[5].len = 2;
+ 	CS_CHANGE(req->xfer[5]);
+@@ -987,6 +991,7 @@
+ 	struct spi_transfer *x = ts->xfer;
+ 	struct ads7846_packet *packet = ts->packet;
+ 	int vref = pdata->keep_vref_on;
++	static char zeroes[4] = {0};
+ 
+ 	if (ts->model == 7873) {
+ 		/*
+@@ -1018,6 +1023,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.y;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1038,6 +1044,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.y;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1066,6 +1073,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.x;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1082,6 +1090,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.x;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1101,6 +1110,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.z1;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1116,6 +1126,7 @@
+ 			spi_message_add_tail(x, m);
+ 
+ 			x++;
++			x->tx_buf = zeroes;
+ 			x->rx_buf = &packet->tc.z1;
+ 			x->len = 2;
+ 			spi_message_add_tail(x, m);
+@@ -1133,6 +1144,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->tc.z2;
+ 		x->len = 2;
+ 		spi_message_add_tail(x, m);
+@@ -1148,6 +1160,7 @@
+ 			spi_message_add_tail(x, m);
+ 
+ 			x++;
++			x->tx_buf = zeroes;
+ 			x->rx_buf = &packet->tc.z2;
+ 			x->len = 2;
+ 			spi_message_add_tail(x, m);
+@@ -1175,6 +1188,7 @@
+ 		spi_message_add_tail(x, m);
+ 
+ 		x++;
++		x->tx_buf = zeroes;
+ 		x->rx_buf = &packet->dummy;
+ 		x->len = 2;
+ 	}
+@@ -1185,11 +1199,11 @@
+ 
+ #ifdef CONFIG_OF
+ static const struct of_device_id ads7846_dt_ids[] = {
+-	{ .compatible = "ti,tsc2046",	.data = (void *) 7846 },
+-	{ .compatible = "ti,ads7843",	.data = (void *) 7843 },
+-	{ .compatible = "ti,ads7845",	.data = (void *) 7845 },
+-	{ .compatible = "ti,ads7846",	.data = (void *) 7846 },
+-	{ .compatible = "ti,ads7873",	.data = (void *) 7873 },
++	{ .compatible = "ti,tsc2046x",	.data = (void *) 7846 },
++	{ .compatible = "ti,ads7843x",	.data = (void *) 7843 },
++	{ .compatible = "ti,ads7845x",	.data = (void *) 7845 },
++	{ .compatible = "ti,ads7846x",	.data = (void *) 7846 },
++	{ .compatible = "ti,ads7873x",	.data = (void *) 7873 },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ads7846_dt_ids);
+@@ -1365,7 +1379,7 @@
+ 	ts->wait_for_sync = pdata->wait_for_sync ? : null_wait_for_sync;
+ 
+ 	snprintf(ts->phys, sizeof(ts->phys), "%s/input0", dev_name(&spi->dev));
+-	snprintf(ts->name, sizeof(ts->name), "ADS%d Touchscreen", ts->model);
++	snprintf(ts->name, sizeof(ts->name), "ADS%dx Touchscreen", ts->model);
+ 
+ 	input_dev->name = ts->name;
+ 	input_dev->phys = ts->phys;
+@@ -1526,9 +1540,9 @@
+ 	return 0;
+ }
+ 
+-static struct spi_driver ads7846_driver = {
++static struct spi_driver ads7846x_driver = {
+ 	.driver = {
+-		.name	= "ads7846",
++		.name	= "ads7846x",
+ 		.pm	= &ads7846_pm,
+ 		.of_match_table = of_match_ptr(ads7846_dt_ids),
+ 	},
+@@ -1536,8 +1550,8 @@
+ 	.remove		= ads7846_remove,
+ };
+ 
+-module_spi_driver(ads7846_driver);
++module_spi_driver(ads7846x_driver);
+ 
+-MODULE_DESCRIPTION("ADS7846 TouchScreen Driver");
++MODULE_DESCRIPTION("ADS7846x TouchScreen Driver");
+ MODULE_LICENSE("GPL");
+-MODULE_ALIAS("spi:ads7846");
++MODULE_ALIAS("spi:ads7846x");
