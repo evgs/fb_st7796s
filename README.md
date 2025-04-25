@@ -6,18 +6,18 @@
 cd ~ 
 rm -r fb_st7796s
 git clone https://github.com/evgs/fb_st7796s.git
-fb_st7796s/install.sh
+fb_st7796s/install_opi3lts.sh
 ```
 Если дисплей повёрнут горизонтально, то дополнительно запустить скрипт
 ```console
-fb_st7796s/switch_to_landscape.sh
+fb_st7796s/switch_to_landscape_opi3lts.sh
 ```
 
 ## удаление драйвера
 
 ```console
 cd ~ 
-fb_st7796s/uninstall.sh
+fb_st7796s/uninstall_opi3lts.sh
 ```
 
 В процессе деинсталляции будет удалены файл оверлея spi-экрана и конфигурационные файлы X-сервера, относящиеся к spi-дисплею и тачскрину.
