@@ -29,6 +29,9 @@ echo "Installing headers..."
 sudo dpkg -i /opt/linux-headers-legacy-rockchip-rk356x_*_arm64.deb 
 #some prebuilt debian images may have headers preinstalled
 
+echo "Patching orangepi-release..."
+sudo sed -i 's/LINUXFAMILY=rockchip-rk356x/LINUXFAMILY=rockchip64/g' /etc/orangepi-release
+
 cd $SPATH
 
 
