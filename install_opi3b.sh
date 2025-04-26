@@ -26,7 +26,8 @@ OVL=orangepi-add-overlay
 sudo apt install git build-essential || die "Error while installing packages"
 
 echo "Installing headers..."
-sudo dpkg -i /opt/linux-headers-legacy-rockchip-rk356x_1.0.2_arm64.deb || die "Error while installing headers"
+sudo dpkg -i /opt/linux-headers-legacy-rockchip-rk356x_*_arm64.deb 
+#some prebuilt debian images may have headers preinstalled
 
 cd $SPATH
 
