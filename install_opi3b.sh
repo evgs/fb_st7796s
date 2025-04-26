@@ -21,7 +21,6 @@ echo $UN | grep 5.10.160-rockchip-rk356x || die "Unsupported kernel architecture
 #LHEADERS=linux-headers-next-sun50iw6
 OVL=orangepi-add-overlay
 
-die "STOP"
 #sudo apt update
 #sudo apt install git build-essential $LHEADERS || die "Error while installing packages"
 sudo apt install git build-essential || die "Error while installing packages"
