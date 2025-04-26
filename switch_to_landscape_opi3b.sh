@@ -21,8 +21,8 @@ OVL=orangepi-add-overlay
 cd $SPATH
 
 echo "Installing overlay..."
-cp $SPATH/dts/rk3566-st7796s-landscape.dts /tmp/rk3566-st7796s.dts
-sudo $OVL /tmp/rk3566-st7796s.dts || die "Error installing overlay"
+cp $SPATH/dts/rk3566-st7796-landscape.dts /tmp/rk3566-st7796.dts
+sudo $OVL /tmp/rk3566-st7796.dts || die "Error installing overlay"
 
 
 echo "Copying xorg.conf rules..."
